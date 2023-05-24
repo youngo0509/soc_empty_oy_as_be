@@ -31,6 +31,10 @@
 #include "app_assert.h"
 #include "sl_bluetooth.h"
 #include "app.h"
+#include "app_log.h"
+#include "sl_sensor_rht.h"
+#include "temperature.h"
+
 
 // The advertising set handle allocated from Bluetooth stack.
 static uint8_t advertising_set_handle = 0xff;
@@ -42,11 +46,14 @@ SL_WEAK void app_init(void)
 {
   /////////////////////////////////////////////////////////////////////////////
   // Put your additional application init code here!                         //
-  // This is called once during start-up.                                    //
+  // This is called once during start-up.
   /////////////////////////////////////////////////////////////////////////////
+  app_log_info("%s\n",__FUNCTION__);
+
+
 }
 
-/**************************************************************************//**
+/************************************************************;**************//**
  * Application Process Action.
  *****************************************************************************/
 SL_WEAK void app_process_action(void)
@@ -99,11 +106,26 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
     // -------------------------------
     // This event indicates that a new connection was opened.
     case sl_bt_evt_connection_opened_id:
+      app_log_info("%s: connection opened! \n", __FUNCTION__);
+
+      //Initialisation of temperature and humidity sensor
+      sl_sensor_rht_init();
+      app_log_info("%s: Relative temperature and Humidity Sensor initialised! \n",__FUNCTION__);
+
+      int temperature = get_bt_temperature();
+      app_log_info("Relative temperature : %d \n",temperature);
+
       break;
 
     // -------------------------------
     // This event indicates that a connection was closed.
     case sl_bt_evt_connection_closed_id:
+      app_log_info("%s: connection closed! \n", __FUNCTION__);
+
+      //Deinitialisation of temperature and humidity sensor
+      sl_sensor_rht_init();
+      app_log_info("%s: Relative temperature and Humidity Sensor deinitialised! \n",__FUNCTION__);
+
       // Generate data for advertising
       sc = sl_bt_legacy_advertiser_generate_data(advertising_set_handle,
                                                  sl_bt_advertiser_general_discoverable);
@@ -113,6 +135,11 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
       sc = sl_bt_legacy_advertiser_start(advertising_set_handle,
                                          sl_bt_advertiser_connectable_scannable);
       app_assert_status(sc);
+      break;
+
+     // This event triggers when characteristic is read.
+    case sl_bt_evt_gatt_server_user_read_request_id:
+      app_log_info("%s: Read request! \n", __FUNCTION__);
       break;
 
     ///////////////////////////////////////////////////////////////////////////

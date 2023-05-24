@@ -1,9 +1,11 @@
 #CRC Codes for initially generated config files -- do not modify!
 app_assert_config.h=1351236558
+app_log_config.h=-1853168024
 app_properties_config.h=-763091270
 btconf/gatt_configuration.btconf=-810178408
 btconf/in_place_ota_dfu.xml=-1860696934
 btl_interface_cfg.h=-1719664633
+dmadrv_config.h=145163010
 emlib_core_debug_config.h=-551881347
 psa_crypto_config.h=-352545338
 sl_bluetooth_advertiser_config.h=-2048821915
@@ -15,6 +17,8 @@ sl_device_init_dcdc_config.h=-1580606003
 sl_device_init_emu_config.h=-1292589747
 sl_device_init_hfxo_config.h=-674059266
 sl_device_init_lfxo_config.h=-1040341360
+sl_i2cspm_sensor_config.h=1435149054
+sl_iostream_usart_vcom_config.h=-1233252042
 sl_mbedtls_config.h=-131196312
 sl_memory_config.h=503032768
 sl_mx25_flash_shutdown_usart_config.h=2028437356
