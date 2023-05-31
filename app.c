@@ -34,10 +34,15 @@
 #include "app_log.h"
 #include "sl_sensor_rht.h"
 #include "temperature.h"
+#include "gatt_db.h"
 
 
 // The advertising set handle allocated from Bluetooth stack.
 static uint8_t advertising_set_handle = 0xff;
+
+//Create timer
+sl_simple_timer_t timer;
+
 
 /**************************************************************************//**
  * Application Init.
@@ -140,15 +145,55 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
      // This event triggers when characteristic is read.
     case sl_bt_evt_gatt_server_user_read_request_id:
       app_log_info("%s: Read request! \n", __FUNCTION__);
+      if (evt->data.evt_gatt_server_user_read_request.characteristic==gattdb_temperature)
+        {
+          app_log_info("%s: Temperature Read request! \n", __FUNCTION__);
+          uint8_t connection = evt->data.evt_gatt_server_user_read_request.connection;
+          uint8_t temperature = get_bt_temperature();
+          uint16_t sent_len;
+          sc = sl_bt_gatt_server_send_user_read_response(connection,
+                                                                gattdb_temperature,
+                                                                0,
+                                                                2,
+                                                                &temperature,
+                                                                &sent_len);
+      }
       break;
 
     ///////////////////////////////////////////////////////////////////////////
     // Add additional event handlers here as your application requires!      //
     ///////////////////////////////////////////////////////////////////////////
+      // This event triggers when Client Characteristic Configuration Descriptor is modified.
+    case  sl_bt_evt_gatt_server_characteristic_status_id:
+
+      app_log_info("%s: CCCD modification request! \n", __FUNCTION__);
+
+      if (evt->data.evt_gatt_server_characteristic_status.characteristic==gattdb_temperature)
+             {
+               app_log_info("%s: Temperature Notification request! \n", __FUNCTION__);
+             }
+      if (evt->data.evt_gatt_server_characteristic_status.status_flags==0x1)
+        {
+          app_log_info("%s: Characteristic client configuration has been changed! \n", __FUNCTION__);
+        }
+      uint16_t flag = evt->data.evt_gatt_server_characteristic_status.client_config_flags;
+      app_log_info("flag's value : %d \n",flag);
+      if (flag==1){
+          int count=0;
+          sc =  sl_simple_timer_start(&timer,
+                                     1000,
+                                     temp_timer_callback,
+                                     &count,
+                                     true);
+      } else {
+          sl_simple_timer_stop(&timer);
+      }
+      break;
 
     // -------------------------------
     // Default event handler.
     default:
       break;
   }
+
 }
