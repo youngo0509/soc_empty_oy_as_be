@@ -32,6 +32,7 @@ gecko_sdk_4.2.3/platform/bootloader/app_properties \
 gecko_sdk_4.2.3/platform/common/src \
 gecko_sdk_4.2.3/platform/common/toolchain/src \
 gecko_sdk_4.2.3/platform/driver/i2cspm/src \
+gecko_sdk_4.2.3/platform/driver/leddrv/src \
 gecko_sdk_4.2.3/platform/emdrv/dmadrv/src \
 gecko_sdk_4.2.3/platform/emlib/src \
 gecko_sdk_4.2.3/platform/radio/rail_lib/plugin/pa-conversions \

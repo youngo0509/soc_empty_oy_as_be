@@ -126,6 +126,9 @@ autogen/sl_event_handler.o: ../autogen/sl_event_handler.c \
  ../autogen/sl_iostream_init_usart_instances.h \
  c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\security\sl_component\sl_mbedtls_support\inc\sl_mbedtls.h \
  c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\service\mpu\inc\sl_mpu.h \
+ ../autogen/sl_simple_led_instances.h \
+ c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\driver\leddrv\inc\sl_simple_led.h \
+ c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\driver\leddrv\inc\sl_led.h \
  c:\users\oy050\simplicitystudio\sdks\gecko_sdk\app\bluetooth\common\simple_timer\sl_simple_timer.h \
  ../autogen/sl_iostream_init_instances.h
 c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\common\toolchain\inc\sl_gcc_preinclude.h:
@@ -255,5 +258,8 @@ c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\service\iostream\inc\sl_
 ../autogen/sl_iostream_init_usart_instances.h:
 c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\security\sl_component\sl_mbedtls_support\inc\sl_mbedtls.h:
 c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\service\mpu\inc\sl_mpu.h:
+../autogen/sl_simple_led_instances.h:
+c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\driver\leddrv\inc\sl_simple_led.h:
+c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\driver\leddrv\inc\sl_led.h:
 c:\users\oy050\simplicitystudio\sdks\gecko_sdk\app\bluetooth\common\simple_timer\sl_simple_timer.h:
 ../autogen/sl_iostream_init_instances.h:

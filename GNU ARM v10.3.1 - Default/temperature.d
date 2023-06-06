@@ -84,7 +84,10 @@ temperature.o: ../temperature.c \
  c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\emdrv\common\inc\ecode.h \
  c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\emlib\inc\em_ldma.h \
  C:\Users\oy050\SimplicityStudio\v5_workspace\soc_empty_oy_as_be\config/dmadrv_config.h \
- C:\Users\oy050\SimplicityStudio\v5_workspace\soc_empty_oy_as_be\config/app_log_config.h
+ C:\Users\oy050\SimplicityStudio\v5_workspace\soc_empty_oy_as_be\config/app_log_config.h \
+ c:\users\oy050\simplicitystudio\sdks\gecko_sdk\protocol\bluetooth\inc\sl_bt_api.h \
+ c:\users\oy050\simplicitystudio\sdks\gecko_sdk\protocol\bluetooth\inc\sl_bgapi.h \
+ c:\users\oy050\simplicitystudio\sdks\gecko_sdk\protocol\bluetooth\inc\sl_bt_api_compatibility.h
 c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\common\toolchain\inc\sl_gcc_preinclude.h:
 ../temperature.h:
 c:\users\oy050\simplicitystudio\sdks\gecko_sdk\app\bluetooth\common\sensor_rht\sl_sensor_rht.h:
@@ -171,3 +174,6 @@ c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\emdrv\common\inc\ecode.h
 c:\users\oy050\simplicitystudio\sdks\gecko_sdk\platform\emlib\inc\em_ldma.h:
 C:\Users\oy050\SimplicityStudio\v5_workspace\soc_empty_oy_as_be\config/dmadrv_config.h:
 C:\Users\oy050\SimplicityStudio\v5_workspace\soc_empty_oy_as_be\config/app_log_config.h:
+c:\users\oy050\simplicitystudio\sdks\gecko_sdk\protocol\bluetooth\inc\sl_bt_api.h:
+c:\users\oy050\simplicitystudio\sdks\gecko_sdk\protocol\bluetooth\inc\sl_bgapi.h:
+c:\users\oy050\simplicitystudio\sdks\gecko_sdk\protocol\bluetooth\inc\sl_bt_api_compatibility.h:

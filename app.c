@@ -35,13 +35,16 @@
 #include "sl_sensor_rht.h"
 #include "temperature.h"
 #include "gatt_db.h"
-
+#include "sl_simple_led_instances.h"
 
 // The advertising set handle allocated from Bluetooth stack.
 static uint8_t advertising_set_handle = 0xff;
 
 //Create timer
 sl_simple_timer_t timer;
+
+//step count for timer
+struct ma_struct_s g_ma_struct;
 
 
 /**************************************************************************//**
@@ -54,6 +57,7 @@ SL_WEAK void app_init(void)
   // This is called once during start-up.
   /////////////////////////////////////////////////////////////////////////////
   app_log_info("%s\n",__FUNCTION__);
+  sl_simple_led_init_instances();
 
 
 }
@@ -149,13 +153,13 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
         {
           app_log_info("%s: Temperature Read request! \n", __FUNCTION__);
           uint8_t connection = evt->data.evt_gatt_server_user_read_request.connection;
-          uint8_t temperature = get_bt_temperature();
+          uint16_t temperature = get_bt_temperature();
           uint16_t sent_len;
           sc = sl_bt_gatt_server_send_user_read_response(connection,
                                                                 gattdb_temperature,
                                                                 0,
                                                                 2,
-                                                                &temperature,
+                                                                (const uint8_t*)&temperature,
                                                                 &sent_len);
       }
       break;
@@ -179,14 +183,44 @@ void sl_bt_on_event(sl_bt_msg_t *evt)
       uint16_t flag = evt->data.evt_gatt_server_characteristic_status.client_config_flags;
       app_log_info("flag's value : %d \n",flag);
       if (flag==1){
-          int count=0;
+          g_ma_struct.connection= evt->data.evt_gatt_server_characteristic_status.connection;
+          g_ma_struct.characteristic= evt->data.evt_gatt_server_characteristic_status.characteristic;
           sc =  sl_simple_timer_start(&timer,
                                      1000,
                                      temp_timer_callback,
-                                     &count,
+                                     &g_ma_struct,
                                      true);
       } else {
           sl_simple_timer_stop(&timer);
+      }
+      break;
+
+      //WRITE REQUEST
+    case  sl_bt_evt_gatt_server_user_write_request_id:
+      {
+
+        uint8array *pvalue = &evt->data.evt_gatt_server_user_write_request.value;
+        uint8_t * data = pvalue->data;
+        app_log_info("%s: Write request! \n", __FUNCTION__);
+
+        uint8_t opcode = evt->data.evt_gatt_server_user_write_request.att_opcode;
+        app_log_info("Opcode : %d \n", opcode);
+
+        if(opcode==18){
+
+        uint8_t connection = evt->data.evt_gatt_server_user_write_request.connection;
+        uint8_t characteristic = evt->data.evt_gatt_server_user_write_request.characteristic;
+        sl_bt_gatt_server_send_user_write_response(connection, characteristic,0);
+        }
+        else{};
+
+        if (data[0]==0){
+            sl_led_led0.turn_off(sl_led_led0.context);
+        }
+        if (data[0]==1){
+            sl_led_led0.turn_on(sl_led_led0.context);
+        }
+
       }
       break;
 
